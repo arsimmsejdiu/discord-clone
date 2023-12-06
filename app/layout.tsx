@@ -38,4 +38,4 @@ export default function RootLayout({
       </html>
     </ClerkProvider>
   );
-} // Server channel list -> beggining
+} // Vhat Header -> 6:11

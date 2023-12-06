@@ -13,7 +13,7 @@ import { ServerChannel } from "@/components/server/server-channel";
 import { ServerMember } from "@/components/server//server-member";
 
 interface ServerSidebarProps {
-  serverId: string;
+  serverId: string | undefined;
 }
 
 const iconMap = {
