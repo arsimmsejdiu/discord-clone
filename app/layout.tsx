@@ -38,4 +38,4 @@ export default function RootLayout({
       </html>
     </ClerkProvider>
   );
-} // Vhat Header -> 6:11
+} // Chat Header -> 6:11
