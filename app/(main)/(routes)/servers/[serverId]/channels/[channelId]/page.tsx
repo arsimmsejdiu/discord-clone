@@ -2,6 +2,7 @@ import ChatHeader from '@/components/chat/chat-header'
 import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
 import { redirectToSignIn } from '@clerk/nextjs'
+import { ChannelType } from '@prisma/client'
 import { redirect } from 'next/navigation'
 
 interface ChannelIdPageProps {
@@ -40,6 +41,7 @@ const ChannelIdPage = async ({params}: ChannelIdPageProps) => {
       <ChatHeader 
         name={channel?.name}
         serverId={channel?.serverId}
+        channelType={channel?.type as ChannelType}
         type="channel"
       />
     </div>
