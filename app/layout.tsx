@@ -38,4 +38,4 @@ export default function RootLayout({
       </html>
     </ClerkProvider>
   );
-} // Chat Header -> 6:11
+} // Socket IO Settup -> 6:38
