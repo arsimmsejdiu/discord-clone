@@ -43,6 +43,7 @@ const ChannelIdPage = async ({params}: ChannelIdPageProps) => {
         serverId={channel?.serverId}
         channelType={channel?.type as ChannelType}
         type="channel"
+        role={"GUEST"}
       />
     </div>
   )
