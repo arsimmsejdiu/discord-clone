@@ -2,6 +2,7 @@ import { MobileToggle } from '@/components/mobile-toggle'
 import { UserAvatar } from '@/components/user-avatar'
 import { iconMap, roleIconMap } from '@/assets'
 import { ChatHeaderProps } from '@/interfaces/ChatHeaderInterface'
+import { SocketIndicator } from '@/components/socket-indicator'
 
 const ChatHeader = ({serverId, name, type, imageUrl, channelType, role}: ChatHeaderProps) => {
   const iconRoleMap = roleIconMap[role];
@@ -25,12 +26,12 @@ const ChatHeader = ({serverId, name, type, imageUrl, channelType, role}: ChatHea
       <p>
         {iconRoleMap}
       </p>
-      {/* <div className="ml-auto flex items-center">
-        {type === "conversation" && (
+      {<div className="ml-auto flex items-center">
+        {/* {type === "conversation" && (
           <ChatVideoButton />
-        )}
+        )} */}
         <SocketIndicator />
-      </div> */}
+      </div> }
     </div>
   )
 }
