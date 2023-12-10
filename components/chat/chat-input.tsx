@@ -13,8 +13,11 @@ import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Plus, Smile } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof chatInputFormSchema>>({
     resolver: zodResolver(chatInputFormSchema),
     defaultValues: {
@@ -28,10 +31,13 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
     try {
       const url = qs.stringifyUrl({
         url: apiUrl,
-        query,
+        query: query,
       });
 
       await axios.post(url, values);
+
+      form.reset();
+      router.refresh();
     } catch (error) {
       console.log(error)
     }

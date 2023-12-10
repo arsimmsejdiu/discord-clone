@@ -46,8 +46,8 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
         type="channel"
         apiUrl="/api/socket/messages"
         query={{
-          chanelId: channel?.id,
-          serverId: channel?.serverId
+          channelId: channel ? channel.id : params.channelId,
+          serverId: channel ? channel.serverId : params.serverId,
         }}
       />
     </div>
