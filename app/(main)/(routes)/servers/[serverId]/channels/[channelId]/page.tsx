@@ -5,7 +5,7 @@ import { redirectToSignIn } from "@clerk/nextjs";
 import { ChannelType } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { ChatInput } from "@/components/chat/chat-input";
-import { ChannelIdPageProps } from "@/interfaces/channel-id-page-interface";
+import { ChannelIdPageProps } from "@/interfaces/channel-interface";
 
 const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
   const profile = await currentProfile();
@@ -40,8 +40,10 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
         type="channel"
         role={"GUEST"}
       />
-      <div className="flex flex-col flex-1 justify-center items-center">Features messanges</div>
-      <ChatInput 
+      <div className="flex flex-col flex-1 justify-center items-center">
+        Features messanges
+      </div>
+      <ChatInput
         name={channel?.name as string}
         type="channel"
         apiUrl="/api/socket/messages"

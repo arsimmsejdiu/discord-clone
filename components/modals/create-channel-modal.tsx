@@ -34,18 +34,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
 import { ChannelType } from "@prisma/client";
 import { useEffect } from "react";
-
-const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "Channel name is required.",
-  }).refine(
-    name => name !== "general",
-    {
-      message: "Channel name cannot be 'general'"
-    }
-  ),
-  type: z.nativeEnum(ChannelType)
-});
+import { createChannelFormSchema } from "@/schema/modal-schema";
 
 export const CreateChannelModal = () => {
   const {isOpen, onClose, type, data} = useModal();
@@ -56,7 +45,7 @@ export const CreateChannelModal = () => {
   const {channelType} = data;
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createChannelFormSchema),
     defaultValues: {
       name: "",
       type: channelType || ChannelType.TEXT,
@@ -73,7 +62,7 @@ export const CreateChannelModal = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof createChannelFormSchema>) => {
     try {
       const url = qs.stringifyUrl({
         url: "/api/channels",

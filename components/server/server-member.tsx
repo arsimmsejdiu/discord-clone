@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { UserAvatar } from "@/components/user-avatar";
 import { roleIconMap } from "@/assets";
-import { ServerMemberProps } from "@/interfaces/ServerMemberInterface";
+import { ServerMemberProps } from "@/interfaces/server-interface";
 
 export const ServerMember = ({
   member,

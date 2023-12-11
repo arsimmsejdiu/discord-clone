@@ -26,24 +26,16 @@ import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
-
-const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "Server name is required.",
-  }),
-  imageUrl: z.string().min(1, {
-    message: "Server image is required.",
-  }),
-});
+import { createServerFormSchema } from "@/schema/modal-schema";
 
 export const CreateServerModal = () => {
-  const {isOpen, onClose, type} = useModal()
+  const { isOpen, onClose, type } = useModal();
   const router = useRouter();
 
-  const isModalOpen = isOpen && type === "createServer"
+  const isModalOpen = isOpen && type === "createServer";
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(createServerFormSchema),
     defaultValues: {
       name: "",
       imageUrl: "",
@@ -52,7 +44,7 @@ export const CreateServerModal = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof createServerFormSchema>) => {
     try {
       await axios.post("/api/servers", values);
 
@@ -67,7 +59,7 @@ export const CreateServerModal = () => {
   const handleClose = () => {
     form.reset();
     onClose();
-  }
+  };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>

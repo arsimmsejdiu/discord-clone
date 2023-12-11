@@ -34,18 +34,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useEffect } from "react";
-
-const formSchema = z.object({
-  name: z
-    .string()
-    .min(1, {
-      message: "Channel name is required.",
-    })
-    .refine((name) => name !== "general", {
-      message: "Channel name cannot be 'general'",
-    }),
-  type: z.nativeEnum(ChannelType),
-});
+import { editChannelFormSchema } from "@/schema/modal-schema";
 
 export const EditChannelModal = () => {
   const { isOpen, onClose, type, data } = useModal();
@@ -56,7 +45,7 @@ export const EditChannelModal = () => {
   const { channel, server } = data;
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(editChannelFormSchema),
     defaultValues: {
       name: "",
       type: channel?.type || ChannelType.TEXT,
@@ -72,7 +61,7 @@ export const EditChannelModal = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof editChannelFormSchema>) => {
     try {
       const url = qs.stringifyUrl({
         url: `/api/channels/${channel?.id}`,

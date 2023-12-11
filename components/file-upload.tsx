@@ -5,12 +5,7 @@ import Image from "next/image";
 import { UploadDropzone } from "@/lib/uploadthing";
 
 import "@uploadthing/react/styles.css";
-
-interface FileUploadProps {
-  onChange: (url?: string) => void;
-  value: string;
-  endpoint: "messageFile" | "serverImage";
-}
+import { FileUploadProps } from "@/interfaces/components-interface";
 
 export const FileUpload = ({ endpoint, value, onChange }: FileUploadProps) => {
   const fileType = value?.split(".").pop();

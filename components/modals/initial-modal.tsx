@@ -26,15 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
-
-const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "Server name is required.",
-  }),
-  imageUrl: z.string().min(1, {
-    message: "Server image is required.",
-  }),
-});
+import { initialModalFormSchema } from "@/schema/modal-schema";
 
 export const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -46,7 +38,7 @@ export const InitialModal = () => {
   }, []);
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(initialModalFormSchema),
     defaultValues: {
       name: "",
       imageUrl: "",
@@ -55,7 +47,7 @@ export const InitialModal = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof initialModalFormSchema>) => {
     try {
       await axios.post("/api/servers", values);
 

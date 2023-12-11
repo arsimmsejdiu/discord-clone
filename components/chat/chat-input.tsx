@@ -6,8 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import qs from "query-string";
 
-import { ChatInputProps } from "@/interfaces/ChatInputInterface";
-import { chatInputFormSchema } from "@/schema/chat-input-schema";
+import { ChatInputProps } from "@/interfaces/chat-interface";
+import { chatInputFormSchema } from "@/schema/chat-schema";
 import { useForm } from "react-hook-form";
 
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
@@ -39,7 +39,7 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
       form.reset();
       router.refresh();
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 

@@ -27,15 +27,8 @@ import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
 import { useEffect } from "react";
+import { editServerModalFormSchema } from "@/schema/modal-schema";
 
-const formSchema = z.object({
-  name: z.string().min(1, {
-    message: "Server name is required.",
-  }),
-  imageUrl: z.string().min(1, {
-    message: "Server image is required.",
-  }),
-});
 
 export const EditServerModal = () => {
   const {isOpen, onClose, type, data} = useModal()
@@ -46,7 +39,7 @@ export const EditServerModal = () => {
   const {server} = data;
 
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(editServerModalFormSchema),
     defaultValues: {
       name: "",
       imageUrl: "",
@@ -62,7 +55,7 @@ export const EditServerModal = () => {
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof editServerModalFormSchema>) => {
     try {
       await axios.patch(`/api/servers/${server?.id}`, values);
 

@@ -1,10 +1,6 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { UserAvatarPros } from "@/interfaces/components-interface";
 import { cn } from "@/lib/utils";
-
-interface UserAvatarPros {
-  src?: string;
-  className?: string;
-}
 
 export const UserAvatar = ({ className, src }: UserAvatarPros) => {
   return (

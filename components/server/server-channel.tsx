@@ -1,24 +1,14 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Channel, ChannelType, MemberRole, Server } from "@prisma/client";
-import { Edit, Hash, Lock, Mic, Trash, Video } from "lucide-react";
+import { MemberRole } from "@prisma/client";
+import { Edit, Lock, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { ActionTooltip } from "@/components/action-tooltip";
 import { ModalType, useModal } from "@/hooks/use-modal-store";
-
-interface ServerChannelProps {
-  channel: Channel;
-  server: Server;
-  role?: MemberRole;
-}
-
-const iconMap = {
-  [ChannelType.TEXT]: Hash,
-  [ChannelType.AUDIO]: Mic,
-  [ChannelType.VIDEO]: Video,
-};
+import { ServerChannelProps } from "@/interfaces/server-interface";
+import { serverIconMap } from "@/assets/icons";
 
 export const ServerChannel = ({
   channel,
@@ -29,19 +19,19 @@ export const ServerChannel = ({
   const router = useRouter();
   const { onOpen } = useModal();
 
-  const Icon = iconMap[channel.type];
+  const Icon = serverIconMap[channel.type];
 
   const onClick = () => {
-    router.push(`/servers/${params?.serverId}/channels/${channel.id}`)
-  }
+    router.push(`/servers/${params?.serverId}/channels/${channel.id}`);
+  };
 
   const onAction = (e: React.MouseEvent, action: ModalType) => {
     // this method allows us to click a button inside a button, it will prevent overiding the child bittons inside.
-    // because if you have a button and inside the button you have 2 icons that are clickable the parent button will override these 2 
+    // because if you have a button and inside the button you have 2 icons that are clickable the parent button will override these 2
     // which means whenever you click on the 2 icons it will trigger the onCLick of the parent button
     e.stopPropagation();
-    onOpen(action, {channel, server});
-  }
+    onOpen(action, { channel, server });
+  };
 
   return (
     <button

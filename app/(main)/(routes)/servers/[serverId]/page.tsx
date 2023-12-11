@@ -3,12 +3,7 @@ import { redirect } from "next/navigation";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-
-interface ServerIdPageProps {
-  params: {
-    serverId: string;
-  }
-};
+import { ServerIdPageProps } from "@/interfaces/main-interface";
 
 const ServerIdPage = async ({
   params
