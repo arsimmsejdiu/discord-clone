@@ -1,14 +1,5 @@
-import { ModalData } from "@/interfaces/hooks-interface";
-import { ModalType } from "@/types/hook-type";
+import { ModalStore } from "@/interfaces/hooks-interface";
 import { create } from "zustand";
-
-interface ModalStore {
-  type: ModalType | null;
-  data: ModalData;
-  isOpen: boolean;
-  onOpen: (type: ModalType, data?: ModalData) => void;
-  onClose: () => void;
-}
 
 export const useModal = create<ModalStore>((set) => ({
   type: null,

@@ -51,3 +51,9 @@ export const initialModalFormSchema = z.object({
     message: "Server image is required.",
   }),
 });
+
+export const messageFileFormSchema = z.object({
+  fileUrl: z.string().min(1, {
+    message: "Attachment is required.",
+  }),
+});

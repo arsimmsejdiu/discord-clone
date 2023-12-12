@@ -4,7 +4,7 @@ import axios from "axios";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import qs from "query-string"
 
 import {
   Dialog,
@@ -19,50 +19,63 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
-import { initialModalFormSchema } from "@/schema/modal-schema";
+import { messageFileFormSchema } from "@/schema/modal-schema";
+import { useModal } from "@/hooks/use-modal-store";
 
-export const InitialModal = () => {
+export const MessageFileModal = () => {
+  const {isOpen, onClose, type, data} = useModal();
   const router = useRouter();
+  const {apiUrl, query} = data;
+
+  const isModalOpen = isOpen && type === "messageFile";
 
   const form = useForm({
-    resolver: zodResolver(initialModalFormSchema),
+    resolver: zodResolver(messageFileFormSchema),
     defaultValues: {
-      name: "",
-      imageUrl: "",
+      fileUrl: "",
     },
   });
 
   const isLoading = form.formState.isSubmitting;
 
-  const onSubmit = async (values: z.infer<typeof initialModalFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof messageFileFormSchema>) => {
     try {
-      await axios.post("/api/servers", values);
+      const url = qs.stringifyUrl({
+        url: apiUrl || "",
+        query: query
+      })
+
+      await axios.post(url, {
+        ...values,
+        content: values.fileUrl
+      });
 
       form.reset();
       router.refresh();
-      window.location.reload();
+      handleClose();
     } catch (error) {
       console.log(error);
     }
   };
 
+  const handleClose = () => {
+    form.reset();
+    onClose();
+  }
+
   return (
-    <Dialog open>
+    <Dialog open={isModalOpen} onOpenChange={handleClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Customize your server
+            Add an Attachement
           </DialogTitle>
           <DialogDescription className="text-center text-zinc-500">
-            Give your server a personality with a name and an image. You can
-            always change it later.
+            Send a file as a message
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -71,12 +84,12 @@ export const InitialModal = () => {
               <div className="flex items-center justify-center text-center">
                 <FormField
                   control={form.control}
-                  name="imageUrl"
+                  name="fileUrl"
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
                         <FileUpload
-                          endpoint="serverImage"
+                          endpoint="messageFile"
                           value={field.value}
                           onChange={field.onChange}
                         />
@@ -85,31 +98,10 @@ export const InitialModal = () => {
                   )}
                 />
               </div>
-
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-                      Server name
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        disabled={isLoading}
-                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter server name"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
               <Button variant="primary" disabled={isLoading}>
-                Create
+                Send
               </Button>
             </DialogFooter>
           </form>
