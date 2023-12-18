@@ -2,10 +2,11 @@ import ChatHeader from "@/components/chat/chat-header";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
-import { ChannelType } from "@prisma/client";
+import { ChannelType, Member } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { ChatInput } from "@/components/chat/chat-input";
 import { ChannelIdPageProps } from "@/interfaces/channel-interface";
+import { ChatMessages } from "@/components/chat/chat-messages";
 
 const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
   const profile = await currentProfile();
@@ -24,7 +25,7 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
     where: {
       serverId: params.serverId,
       profileId: profile.id,
-    },
+    }
   }); // find a user that is inside this server with this profile id
 
   if (!channel && !member) {
@@ -40,9 +41,20 @@ const ChannelIdPage = async ({ params }: ChannelIdPageProps) => {
         type="channel"
         role={"GUEST"}
       />
-      <div className="flex flex-col flex-1 justify-center items-center">
-        Features messanges
-      </div>
+      <ChatMessages 
+        member={member as Member}
+        name={channel?.name as string}
+        type="channel"
+        chatId={channel?.id as string}
+        apiUrl="/api/messages"
+        socketUrl="/api/socket/messages"
+        socketQuery={{
+          channelId: channel?.id as string,
+          serverId: channel?.serverId as string,
+        }}
+        paramKey="channelId"
+        paramValue={channel?.id as string}
+      />
       <ChatInput
         name={channel?.name as string}
         type="channel"
