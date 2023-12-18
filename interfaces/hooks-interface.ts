@@ -9,11 +9,17 @@ export interface ModalData {
   query?: Record<string, any>;
 }
 
-
 export interface ModalStore {
   type: ModalType | null;
   data: ModalData;
   isOpen: boolean;
   onOpen: (type: ModalType, data?: ModalData) => void;
   onClose: () => void;
+}
+
+export interface ChatQueryProps {
+  queryKey: string,
+  apiUrl: string,
+  paramKey: "channelId" | "coversationId",
+  paramValue: string
 }
