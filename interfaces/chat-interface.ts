@@ -1,4 +1,4 @@
-import { ChannelType, Member, MemberRole } from "@prisma/client";
+import { ChannelType, Member, MemberRole, Profile } from "@prisma/client";
 
 export interface ChatHeaderProps {
   serverId: string | undefined;
@@ -17,18 +17,33 @@ export interface ChatInputProps {
 }
 
 export interface ChatMessagesProps {
-  name: string,
-  member: Member,
-  chatId: string,
-  apiUrl: string,
-  socketUrl: string,
-  socketQuery: Record<string, string>,
-  paramKey: "channelId" | "coversationId",
-  paramValue: string,
-  type: "channel" | "conversation"
+  name: string;
+  member: Member;
+  chatId: string;
+  apiUrl: string;
+  socketUrl: string;
+  socketQuery: Record<string, string>;
+  paramKey: "channelId" | "coversationId";
+  paramValue: string;
+  type: "channel" | "conversation";
 }
 
 export interface ChatWelcomeProps {
-  name: string,
-  type: "channel" | "conversation"
+  name: string;
+  type: "channel" | "conversation";
+}
+
+export interface ChatItemProps {
+  id: string;
+  content: string;
+  member: Member & {
+    profile: Profile;
+  };
+  timestamp: string;
+  fileUrl: string | null;
+  deleted: boolean;
+  currentMember: Member;
+  isUpdated: boolean;
+  socketUrl: string;
+  socketQuery: Record<string, string>;
 }

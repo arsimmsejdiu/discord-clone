@@ -40,4 +40,4 @@ export default function RootLayout({
       </html>
     </ClerkProvider>
   );
-} // Chat item component -> beggining
+} // Chat item component -> 17:59
