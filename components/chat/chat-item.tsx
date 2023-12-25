@@ -176,6 +176,7 @@ export const ChatItem = ({
                 className="flex items-center w-full gap-x-2 pt-2"
                 onSubmit={form.handleSubmit(onSubmit)}
               >
+                 {/* TODO: Add for this input also emojis, because the emojis are added only on the main input message at the bottom */}
                 <FormField
                   control={form.control}
                   name="content"
