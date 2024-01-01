@@ -14,7 +14,7 @@ import { useRouter, useParams } from "next/navigation";
 import { UserAvatar } from "@/components/user-avatar";
 import { ActionTooltip } from "@/components/action-tooltip";
 import { cn } from "@/lib/utils";
-import {ChatItemProps} from "@/interfaces/chat-interface";
+import { ChatItemProps } from "@/interfaces/chat-interface";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -164,7 +164,7 @@ export const ChatItem = ({
             >
               {content}
               {isUpdated && !deleted && (
-                <span className="text-[10px] mx-2 text-zinc-500 dark:text-zinc-400">
+                <span className="text-[14px] mx-2 text-zinc-500 dark:text-zinc-400">
                   (edited)
                 </span>
               )}
@@ -176,7 +176,7 @@ export const ChatItem = ({
                 className="flex items-center w-full gap-x-2 pt-2"
                 onSubmit={form.handleSubmit(onSubmit)}
               >
-                 {/* TODO: Add for this input also emojis, because the emojis are added only on the main input message at the bottom */}
+                {/* TODO: Add for this input also emojis, because the emojis are added only on the main input message at the bottom */}
                 <FormField
                   control={form.control}
                   name="content"

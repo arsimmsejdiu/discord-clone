@@ -9,6 +9,7 @@ import { MessageWithMemberWithProfile } from "@/types/message-type";
 import { ChatItem } from "@/components/chat/chat-item";
 import { format } from "date-fns";
 import { DATE_FORMAT } from "@/assets";
+import { useChatSocket } from "@/hooks/use-chat-socket";
 
 export const ChatMessages = ({
   name,
@@ -22,6 +23,9 @@ export const ChatMessages = ({
   type,
 }: ChatMessagesProps) => {
   const queryKey = `chat:${chatId}`;
+  const addKey = `chat:${chatId}:messages`;
+  const updateKey = `chat:${chatId}:messages:update`;
+
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage, status } =
     useChatQuery({
       queryKey,
@@ -29,6 +33,8 @@ export const ChatMessages = ({
       paramKey,
       paramValue,
     });
+
+  useChatSocket({ queryKey, addKey, updateKey });
 
   if (status === "pending") {
     return (
@@ -61,18 +67,18 @@ export const ChatMessages = ({
           <Fragment key={i}>
             {group.items.map((message: MessageWithMemberWithProfile) => (
               <ChatItem
-              key={message.id}
-              id={message.id}
-              currentMember={member}
-              member={message.member}
-              content={message.content}
-              fileUrl={message.fileUrl}
-              deleted={message.deleted}
-              timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-              isUpdated={message.updatedAt !== message.createdAt}
-              socketUrl={socketUrl}
-              socketQuery={socketQuery}
-            />
+                key={message.id}
+                id={message.id}
+                currentMember={member}
+                member={message.member}
+                content={message.content}
+                fileUrl={message.fileUrl}
+                deleted={message.deleted}
+                timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
+                isUpdated={message.updatedAt !== message.createdAt}
+                socketUrl={socketUrl}
+                socketQuery={socketQuery}
+              />
             ))}
           </Fragment>
         ))}
