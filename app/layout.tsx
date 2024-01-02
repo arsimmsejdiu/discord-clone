@@ -40,4 +40,4 @@ export default function RootLayout({
       </html>
     </ClerkProvider>
   );
-} // Chat item component -> 39:57
+} // Direct messanges -> 02:24
