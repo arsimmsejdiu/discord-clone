@@ -6,9 +6,10 @@ import { Edit, Lock, Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import { ActionTooltip } from "@/components/action-tooltip";
-import { ModalType, useModal } from "@/hooks/use-modal-store";
+import { useModal } from "@/hooks/use-modal-store";
 import { ServerChannelProps } from "@/interfaces/server-interface";
 import { serverIconMap } from "@/assets/icons";
+import { ModalType } from "@/types/hook-type";
 
 export const ServerChannel = ({
   channel,

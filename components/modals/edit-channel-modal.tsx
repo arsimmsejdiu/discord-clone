@@ -6,6 +6,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { ChannelType } from "@prisma/client";
+import { EmojiPicker } from "@/components/emoji-picker";
 
 import {
   Dialog,
@@ -66,7 +67,7 @@ export const EditChannelModal = () => {
       const url = qs.stringifyUrl({
         url: `/api/channels/${channel?.id}`,
         query: {
-          serverId: params?.serverId
+          serverId: params?.serverId,
         },
       });
 
@@ -105,12 +106,21 @@ export const EditChannelModal = () => {
                       Channel name
                     </FormLabel>
                     <FormControl>
+                    <div className="relative">
                       <Input
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                         placeholder="Enter channel name"
                         {...field}
                       />
+                      <div className="absolute top-2 right-2">
+                        <EmojiPicker
+                          onChange={(emoji: string) =>
+                            field.onChange(`${field.value} ${emoji}`)
+                          }
+                        />
+                      </div>
+                    </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

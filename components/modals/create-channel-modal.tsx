@@ -5,6 +5,7 @@ import axios from "axios";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { EmojiPicker } from "@/components/emoji-picker";
 
 import {
   Dialog,
@@ -26,7 +27,7 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -37,12 +38,12 @@ import { useEffect } from "react";
 import { createChannelFormSchema } from "@/schema/modal-schema";
 
 export const CreateChannelModal = () => {
-  const {isOpen, onClose, type, data} = useModal();
+  const { isOpen, onClose, type, data } = useModal();
   const params = useParams();
   const router = useRouter();
 
-  const isModalOpen = isOpen && type === "createChannel"
-  const {channelType} = data;
+  const isModalOpen = isOpen && type === "createChannel";
+  const { channelType } = data;
 
   const form = useForm({
     resolver: zodResolver(createChannelFormSchema),
@@ -53,12 +54,12 @@ export const CreateChannelModal = () => {
   });
 
   useEffect(() => {
-    if(channelType) {
+    if (channelType) {
       form.setValue("type", channelType);
     } else {
       form.setValue("type", ChannelType.TEXT);
     }
-  }, [channelType, form])
+  }, [channelType, form]);
 
   const isLoading = form.formState.isSubmitting;
 
@@ -67,9 +68,9 @@ export const CreateChannelModal = () => {
       const url = qs.stringifyUrl({
         url: "/api/channels",
         query: {
-          serverId: params?.serverId
-        }
-      })
+          serverId: params?.serverId,
+        },
+      });
       await axios.post(url, values);
 
       form.reset();
@@ -83,7 +84,7 @@ export const CreateChannelModal = () => {
   const handleClose = () => {
     form.reset();
     onClose();
-  }
+  };
 
   return (
     <Dialog open={isModalOpen} onOpenChange={handleClose}>
@@ -105,18 +106,27 @@ export const CreateChannelModal = () => {
                       Channel name
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        disabled={isLoading}
-                        className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-                        placeholder="Enter channel name ... "
-                        {...field}
-                      />
+                      <div className="relative">
+                        <Input
+                          disabled={isLoading}
+                          className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
+                          placeholder="Enter channel name ... "
+                          {...field}
+                        />
+                        <div className="absolute top-2 right-2">
+                          <EmojiPicker
+                            onChange={(emoji: string) =>
+                              field.onChange(`${field.value} ${emoji}`)
+                            }
+                          />
+                        </div>
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <FormField 
+              <FormField
                 control={form.control}
                 name="type"
                 render={({ field }) => (
@@ -129,12 +139,16 @@ export const CreateChannelModal = () => {
                     >
                       <FormControl>
                         <SelectTrigger className="bg-zinc-300/50 border-0 focus:ring-0 text-black ring-offset-0 focus:ring-offset-0 capitalize outline-none">
-                          <SelectValue placeholder="Select a channel type"/>
+                          <SelectValue placeholder="Select a channel type" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
                         {Object.values(ChannelType).map((type) => (
-                          <SelectItem key={type} value={type} className="capitalize">
+                          <SelectItem
+                            key={type}
+                            value={type}
+                            className="capitalize"
+                          >
                             {type.toLowerCase()}
                           </SelectItem>
                         ))}
