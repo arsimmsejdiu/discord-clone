@@ -40,4 +40,4 @@ export default function RootLayout({
       </html>
     </ClerkProvider>
   );
-} // Direct messanges -> 02:24
+} // Video and Audio calls -> beggining

@@ -26,6 +26,7 @@ export const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
         sideOffset={40}
         className="bg-transparent border-none shadow-none drop-shadow-none mb-16"
       >
+        {/* TODO: when opening the emoji picker in modals the theme should always be light */}
         <Picker
           theme={resolvedTheme}
           data={data}

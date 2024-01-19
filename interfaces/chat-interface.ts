@@ -23,7 +23,7 @@ export interface ChatMessagesProps {
   apiUrl: string;
   socketUrl: string;
   socketQuery: Record<string, string>;
-  paramKey: "channelId" | "coversationId";
+  paramKey: "channelId" | "conversationId";
   paramValue: string;
   type: "channel" | "conversation";
 }

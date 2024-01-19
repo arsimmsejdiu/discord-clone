@@ -70,7 +70,7 @@ const MemberIdPage = async ({ params }: MemberIdPageProps) => {
         chatId={conversation.id}
         type="conversation"
         apiUrl="/api/direct-messages"
-        paramKey="coversationId"
+        paramKey="conversationId"
         paramValue={conversation.id}
         socketUrl="/api/socket/direct-messages"
         socketQuery={{

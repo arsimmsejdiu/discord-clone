@@ -20,6 +20,6 @@ export interface ModalStore {
 export interface ChatQueryProps {
   queryKey: string,
   apiUrl: string,
-  paramKey: "channelId" | "coversationId",
+  paramKey: "channelId" | "conversationId",
   paramValue: string
 }
