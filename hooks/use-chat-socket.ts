@@ -35,7 +35,7 @@ export const useChatSocket = ({
      *
      * @param message - The new message object that contains the updated message details.
      */
-    socket.on(updateKey, (message: Message) => {
+    socket.on(updateKey, (message: MessageWithMemberWithProfile) => {
       queryClient.setQueryData([queryKey], (oldData: any) => {
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return oldData;
