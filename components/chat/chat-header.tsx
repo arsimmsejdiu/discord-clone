@@ -3,6 +3,7 @@ import { UserAvatar } from "@/components/user-avatar";
 import { iconMap, roleIconMap } from "@/assets";
 import { ChatHeaderProps } from "@/interfaces/chat-interface";
 import { SocketIndicator } from "@/components/socket-indicator";
+import { ChatVideoButton } from "./chat-video-button";
 
 const ChatHeader = ({
   serverId,
@@ -26,9 +27,7 @@ const ChatHeader = ({
       <p>{iconRoleMap}</p>
       {
         <div className="ml-auto flex items-center">
-          {/* {type === "conversation" && (
-          <ChatVideoButton />
-        )} */}
+          {type === "conversation" && <ChatVideoButton />}
           <SocketIndicator />
         </div>
       }
