@@ -23,9 +23,7 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
 
     (async () => {
       try {
-        const resp = await fetch(
-          `/api/livekit?room=${chatId}&username=${name}`
-        );
+        const resp = await fetch(`/api/livekit?room=${chatId}&username=${name}`);
         const data = await resp.json();
         setToken(data.token);
       } catch (e) {
@@ -33,6 +31,31 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
       }
     })();
   }, [user?.firstName, user?.lastName, chatId]);
+
+  // useEffect(() => {
+  //   const modifyCodecPreferences = () => {
+  //     const roomElement = document.querySelector('livekit-room');
+  //     if (roomElement instanceof Room) {
+  //       roomElement.addEventListener('connected', () => {
+  //         const pc = (roomElement as any).getRTCPeerConnection();
+  //         if (pc) {
+  //           const transceivers = pc.getTransceivers();
+  //           transceivers.forEach((transceiver: any) => {
+  //             const capabilities = RTCRtpSender.getCapabilities('video');
+  //             const codecs = capabilities?.codecs;
+  //             const vp8Codec = codecs?.find(codec => codec.mimeType === 'video/VP8');
+  //             if (vp8Codec) {
+  //               transceiver.setCodecPreferences([vp8Codec]);
+  //             }
+  //           });
+  //         }
+  //       });
+  //     }
+  //   };
+
+  //   modifyCodecPreferences();
+  // }, [token]);
+
 
   if (token === "") {
     return (

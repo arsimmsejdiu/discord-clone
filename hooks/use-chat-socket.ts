@@ -6,7 +6,6 @@ import {
   MessageWithMemberWithProfile,
 } from "@/types/chat-socket-types";
 import { useQueryClient } from "@tanstack/react-query";
-import { Message } from "@prisma/client";
 
 /**
  * Custom hook that handles socket events for a chat application.
